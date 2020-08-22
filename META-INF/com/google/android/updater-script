@@ -1,0 +1,29 @@
+ui_print("Lineage Os 14.1 V3 For HTC Desire 820G+ ");
+ui_print("================================================");
+ui_print(" Cihaz            : HTC Desire 820G+        ");
+ui_print(" Gelistiriciler   : Enes Salman(Enki) ");
+ui_print(" ROM              : Lineage Os 14.1 V3 For HTC Desire 820G+      ");
+if ! is_mounted("/system") then
+mount("ext4", "EMMC", "/dev/block/mmcblk0p6", "/system", "");
+endif;
+show_progress(0.750000, 0);
+ui_print("Sistem yetkileri veriliyor...");
+block_image_update("/dev/block/mmcblk0p6", package_extract_file("system.transfer.list"), "system.new.dat", "system.patch.dat");
+if ! is_mounted("/system") then
+mount("ext4", "EMMC", "dev/block/mmcblk0p6", "/system", "");
+endif;
+show_progress(0.020000, 10);
+ui_print("SISTEM HAZIR...");
+if is_mounted("/system") then
+unmount("/system");
+endif;
+ui_print("KERNEL YUKLENIYOR");
+package_extract_file("boot.img", "/dev/bootimg");
+mount("ext4", "EMMC", "/dev/block/mmcblk0p8", "/data");
+package_extract_dir("data", "/data");
+show_progress(0.050000, 5);
+unmount("/system");
+ui_print("---------------------------------------------");
+ui_print("             Yükleme tamamlandı              ");
+ui_print("             FORUM.TURKDEVS.COM              ");
+ui_print("+=====================+=====================+");
